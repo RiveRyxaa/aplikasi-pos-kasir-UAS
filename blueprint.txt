@@ -1,0 +1,292 @@
+================================================================
+  BLUEPRINT FITUR APLIKASI — KASIR
+  Aplikasi Kasir Android Berbasis Flutter
+  Versi Dokumen : 1.0
+  Tanggal       : 27 April 2026
+================================================================
+
+----------------------------------------------------------------
+A. IDENTITAS APLIKASI
+----------------------------------------------------------------
+Nama Aplikasi   : Kasir 
+Platform        : Android (Flutter)
+Tema Warna      : Primer #1E3A5F (Navy), Aksen #F4A92B (Kuning Emas)
+
+----------------------------------------------------------------
+B. MODUL & FITUR UTAMA
+----------------------------------------------------------------
+
+=== MODUL 1 — AUTENTIKASI ===
+
+1.1  Splash Screen
+     - Tampil logo + nama aplikasi selama ±2 detik
+     - Cek sesi login; jika aktif → langsung ke Dashboard
+
+1.2  Login
+     - Input: Username / Email + Password
+     - Validasi form (field kosong, panjang minimal)
+     - Tombol "Masuk" → autentikasi lokal (SQLite/Hive)
+     - Opsi "Ingat Saya" (simpan sesi)
+
+1.3  Register (Opsional — Setup Awal)
+     - Input: Nama Toko, Nama Pemilik, Nomor HP, Password
+     - Data disimpan lokal sebagai profil bisnis
+
+--------------------------------------------------------------
+
+=== MODUL 2 — DASHBOARD ===
+
+2.1  Ringkasan Hari Ini
+     - Total transaksi hari ini
+     - Total pendapatan hari ini
+     - Jumlah item terjual
+     - Shortcut: Transaksi Baru, Laporan, Kelola Produk
+
+2.2  Navigasi Bawah (Bottom Navigation Bar)
+     - [🏠 Beranda] [🛒 Kasir] [📦 Produk] [📊 Laporan] [⚙️ Pengaturan]
+
+--------------------------------------------------------------
+
+=== MODUL 3 — KASIR (POINT OF SALE) ===
+
+3.1  Halaman Utama Kasir
+     - Grid/list produk dengan foto, nama, harga
+     - Search bar produk (real-time filter)
+     - Filter berdasarkan kategori produk
+     - Tap produk → tambah ke keranjang
+
+3.2  Keranjang Belanja (Cart)
+     - Daftar item yang dipilih beserta qty & subtotal
+     - Tombol + / − untuk ubah qty
+     - Tombol hapus item
+     - Tampil: Subtotal, Diskon (manual), Total Akhir
+
+3.3  Proses Pembayaran
+     - Pilih metode bayar: Tunai / QRIS / Transfer Bank
+     - Input nominal uang (untuk metode Tunai)
+     - Hitung kembalian otomatis
+     - Tombol "Bayar & Cetak Struk"
+
+3.4  Struk Digital
+     - Tampil nama toko, tanggal/jam, nomor transaksi
+     - Daftar item, qty, harga satuan, subtotal
+     - Total, diskon, total bayar, kembalian
+     - Tombol: Bagikan (WhatsApp/Share) | Cetak (Bluetooth Printer)
+
+--------------------------------------------------------------
+
+=== MODUL 4 — MANAJEMEN PRODUK ===
+
+4.1  Daftar Produk
+     - Tampil semua produk (gambar, nama, harga, stok)
+     - Search + filter kategori
+     - Indikator stok menipis (warna merah bila stok < batas)
+
+4.2  Tambah / Edit Produk
+     - Field: Foto, Nama, Kategori, Harga Jual, Harga Beli (HPP), Stok
+     - Kode produk / barcode (manual atau scan)
+     - Simpan ke SQLite/Hive
+
+4.3  Hapus Produk
+     - Konfirmasi hapus sebelum eksekusi
+
+4.4  Manajemen Kategori
+     - Tambah / Edit / Hapus kategori
+     - Contoh: Makanan, Minuman, Snack, Rokok, Lainnya
+
+4.5  Scan Barcode (Opsional)
+     - Gunakan kamera untuk scan barcode produk
+     - Auto-isi kode pada form produk
+
+--------------------------------------------------------------
+
+=== MODUL 5 — LAPORAN ===
+
+5.1  Laporan Penjualan Harian
+     - Total transaksi & pendapatan per hari
+     - Filter tanggal
+
+5.2  Laporan Penjualan Mingguan / Bulanan
+     - Grafik garis / batang pendapatan
+     - Daftar transaksi dalam periode
+
+5.3  Riwayat Transaksi
+     - List semua transaksi
+     - Tap detail → tampil isi struk
+     - Filter berdasarkan tanggal / metode bayar
+
+5.4  Produk Terlaris
+     - Ranking produk berdasarkan qty terjual
+
+5.5  Export Laporan
+     - Export ke PDF atau CSV (berbagi via WhatsApp/email)
+
+--------------------------------------------------------------
+
+=== MODUL 6 — PENGATURAN ===
+
+6.1  Profil Toko
+     - Nama toko, alamat, nomor HP, logo toko
+     - Data tampil di struk
+
+6.2  Pengaturan Struk
+     - Pesan footer struk (contoh: "Terima kasih telah berbelanja!")
+     - Toggle tampilkan harga beli di struk
+
+6.3  Manajemen Pengguna (Multi-User Opsional)
+     - Tambah kasir dengan PIN
+     - Role: Owner / Kasir
+
+6.4  Backup & Restore Data
+     - Backup ke file JSON lokal
+     - Restore dari file backup
+
+6.5  Tentang Aplikasi
+     - Versi, developer, lisensi
+
+--------------------------------------------------------------
+
+=== MODUL 7 — NOTIFIKASI & PERINGATAN ===
+
+7.1  Stok Menipis
+     - Notifikasi lokal bila stok produk di bawah ambang batas
+
+7.2  Ringkasan Harian (Opsional)
+     - Notifikasi ringkasan penjualan di akhir hari
+
+----------------------------------------------------------------
+C. DEPENDENCY FLUTTER YANG DIRENCANAKAN
+----------------------------------------------------------------
+
+| Package           | Kegunaan                                  |
+|-------------------|-------------------------------------------|
+| provider / riverpod | State management                        |
+| sqflite + path    | Database lokal SQLite                     |
+| hive + hive_flutter | Penyimpanan cepat (sesi, pengaturan)    |
+| image_picker      | Ambil foto produk dari galeri/kamera      |
+| mobile_scanner    | Scan barcode produk                       |
+| pdf               | Generate struk PDF                        |
+| fl_chart          | Grafik laporan penjualan                  |
+| intl              | Format mata uang Rupiah & tanggal         |
+| share_plus        | Berbagi struk via WhatsApp/Share          |
+| flutter_local_notifications | Notifikasi stok & harian      |
+| printing          | Cetak ke Bluetooth thermal printer        |
+| path_provider     | Akses direktori lokal untuk backup        |
+
+----------------------------------------------------------------
+D. STRUKTUR FOLDER FLUTTER
+----------------------------------------------------------------
+
+lib/
+├── main.dart
+├── app.dart                    ← MaterialApp, tema, routes
+│
+├── models/
+│   ├── product.dart
+│   ├── category.dart
+│   ├── transaction.dart
+│   ├── transaction_item.dart
+│   └── user.dart
+│
+├── screens/
+│   ├── splash/
+│   │   └── splash_screen.dart
+│   ├── auth/
+│   │   ├── login_screen.dart
+│   │   └── register_screen.dart
+│   ├── dashboard/
+│   │   └── dashboard_screen.dart
+│   ├── cashier/
+│   │   ├── cashier_screen.dart
+│   │   ├── cart_screen.dart
+│   │   ├── payment_screen.dart
+│   │   └── receipt_screen.dart
+│   ├── product/
+│   │   ├── product_list_screen.dart
+│   │   ├── product_form_screen.dart
+│   │   └── category_screen.dart
+│   ├── report/
+│   │   ├── report_screen.dart
+│   │   ├── transaction_history_screen.dart
+│   │   └── best_seller_screen.dart
+│   └── settings/
+│       ├── settings_screen.dart
+│       └── store_profile_screen.dart
+│
+├── widgets/
+│   ├── product_card.dart
+│   ├── cart_item_tile.dart
+│   ├── summary_card.dart
+│   ├── chart_widget.dart
+│   └── custom_button.dart
+│
+├── services/
+│   ├── database_service.dart   ← CRUD SQLite
+│   ├── product_service.dart
+│   ├── transaction_service.dart
+│   ├── report_service.dart
+│   └── print_service.dart
+│
+└── utils/
+    ├── currency_formatter.dart
+    ├── date_formatter.dart
+    └── constants.dart
+
+----------------------------------------------------------------
+E. DATABASE SCHEMA (SQLite)
+----------------------------------------------------------------
+
+TABLE: products
+  id          INTEGER PRIMARY KEY AUTOINCREMENT
+  name        TEXT NOT NULL
+  category_id INTEGER
+  price       REAL NOT NULL
+  cost_price  REAL
+  stock       INTEGER DEFAULT 0
+  min_stock   INTEGER DEFAULT 5
+  barcode     TEXT
+  image_path  TEXT
+  created_at  TEXT
+
+TABLE: categories
+  id    INTEGER PRIMARY KEY AUTOINCREMENT
+  name  TEXT NOT NULL
+
+TABLE: transactions
+  id             INTEGER PRIMARY KEY AUTOINCREMENT
+  invoice_number TEXT UNIQUE
+  total          REAL NOT NULL
+  discount       REAL DEFAULT 0
+  payment_method TEXT   -- tunai / qris / transfer
+  amount_paid    REAL
+  change_amount  REAL
+  created_at     TEXT
+
+TABLE: transaction_items
+  id             INTEGER PRIMARY KEY AUTOINCREMENT
+  transaction_id INTEGER REFERENCES transactions(id)
+  product_id     INTEGER REFERENCES products(id)
+  product_name   TEXT
+  price          REAL
+  qty            INTEGER
+  subtotal       REAL
+
+TABLE: store_settings
+  key   TEXT PRIMARY KEY
+  value TEXT
+
+----------------------------------------------------------------
+F. TARGET MILESTONE MINGGU 1
+----------------------------------------------------------------
+[ ] Nama & tema aplikasi ditentukan          → POS Nusantara ✓
+[ ] Dokumen Blueprint selesai (file ini)     → ✓
+[ ] Flutter project diinisialisasi
+[ ] Struktur folder dibuat sesuai skema di atas
+[ ] pubspec.yaml diisi semua dependency
+[ ] Splash screen + tema warna diimplementasi
+[ ] Commit pertama ke GitHub
+
+================================================================
+  Dokumen ini adalah living document.
+  Update setiap ada perubahan fitur atau arsitektur.
+================================================================
