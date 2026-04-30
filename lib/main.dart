@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app.dart';
+import 'models/user.dart';
 import 'utils/constants.dart';
 
 void main() async {
@@ -10,7 +11,11 @@ void main() async {
   // Inisialisasi Hive
   await Hive.initFlutter();
 
-  // Buka box untuk sesi login
+  // Register Hive adapters
+  Hive.registerAdapter(UserAdapter());
+
+  // Buka box untuk data user & sesi login
+  await Hive.openBox<User>(AppStrings.userBox);
   await Hive.openBox(AppStrings.sessionBox);
 
   runApp(const KasirApp());
