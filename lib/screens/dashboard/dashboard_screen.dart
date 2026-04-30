@@ -1,2 +1,16 @@
-// dashboard_screen.dart — Dashboard Placeholder
-// Akan diimplementasi di Step 8
+import 'package:flutter/material.dart';
+
+/// Dashboard Screen — Placeholder
+/// Akan diimplementasi lengkap di Step 8
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Dashboard Screen'),
+      ),
+    );
+  }
+}
