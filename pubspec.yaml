@@ -47,6 +47,14 @@ dependencies:
   # Akses direktori lokal
   path_provider: ^2.1.5
 
+  # === Module 2: Dashboard ===
+  # Database lokal SQLite (produk, transaksi)
+  sqflite: ^2.4.2
+  path: ^1.9.1
+
+  # Format mata uang Rupiah & tanggal Indonesia
+  intl: ^0.20.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
