@@ -5,6 +5,7 @@ import 'app.dart';
 import 'models/user.dart';
 import 'services/database_service.dart';
 import 'utils/constants.dart';
+import 'utils/date_formatter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,9 @@ void main() async {
 
   // Inisialisasi SQLite database (produk, transaksi)
   await DatabaseService().database;
+
+  // Inisialisasi locale Indonesia (format tanggal & mata uang)
+  await DateFormatter.init();
 
   runApp(const KasirApp());
 }
