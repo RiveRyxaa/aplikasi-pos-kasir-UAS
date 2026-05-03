@@ -5,7 +5,7 @@ import 'utils/constants.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
-import 'screens/dashboard/dashboard_screen.dart';
+import 'screens/main_shell.dart';
 
 class KasirApp extends StatelessWidget {
   const KasirApp({super.key});
@@ -21,7 +21,7 @@ class KasirApp extends StatelessWidget {
         AppRoutes.splash: (_) => const SplashScreen(),
         AppRoutes.login: (_) => const LoginScreen(),
         AppRoutes.register: (_) => const RegisterScreen(),
-        AppRoutes.dashboard: (_) => const DashboardScreen(),
+        AppRoutes.dashboard: (_) => const MainShell(),
       },
     );
   }
