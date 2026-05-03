@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -17,7 +18,10 @@ void main() async {
   await Hive.openBox(AppStrings.sessionBox);
 
   // Inisialisasi SQLite database (produk, transaksi)
-  await DatabaseService().database;
+  // sqflite tidak support web, jadi skip di platform web
+  if (!kIsWeb) {
+    await DatabaseService().database;
+  }
 
   // Inisialisasi locale Indonesia (format tanggal & mata uang)
   await DateFormatter.init();

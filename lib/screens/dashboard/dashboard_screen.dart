@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,16 +42,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final summary = await _dbService.getDailySummary();
-      if (!mounted) return;
+      if (!kIsWeb) {
+        final summary = await _dbService.getDailySummary();
+        if (!mounted) return;
 
-      setState(() {
-        _totalTransactions = summary['totalTransactions'] as int;
-        _totalRevenue = summary['totalRevenue'] as double;
-        _totalItems = summary['totalItems'] as int;
-        _isLoading = false;
-      });
+        setState(() {
+          _totalTransactions = summary['totalTransactions'] as int;
+          _totalRevenue = summary['totalRevenue'] as double;
+          _totalItems = summary['totalItems'] as int;
+        });
+      }
     } catch (_) {
+      // Database tidak tersedia (web platform)
+    } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }
