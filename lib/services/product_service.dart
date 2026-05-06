@@ -86,6 +86,35 @@ class ProductService {
     return maps.map((m) => Category.fromMap(m)).toList();
   }
 
+  /// Tambah kategori baru
+  Future<int> addCategory(String name) async {
+    return await _db.insert('categories', {'name': name});
+  }
+
+  /// Update nama kategori
+  Future<int> updateCategory(int id, String name) async {
+    return await _db.update(
+      'categories',
+      {'name': name},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  /// Hapus kategori (hanya jika tidak ada produk terkait)
+  Future<int> deleteCategory(int id) async {
+    return await _db.delete('categories', where: 'id = ?', whereArgs: [id]);
+  }
+
+  /// Hitung jumlah produk di suatu kategori
+  Future<int> getProductCountByCategory(int categoryId) async {
+    final result = await _db.rawQuery(
+      'SELECT COUNT(*) as count FROM products WHERE category_id = ?',
+      [categoryId],
+    );
+    return result.first['count'] as int? ?? 0;
+  }
+
   // ============================================================
   //  SEED DATA DUMMY (untuk testing)
   // ============================================================

@@ -8,6 +8,7 @@ import '../../services/product_service.dart';
 import '../../utils/constants.dart';
 import '../../utils/currency_formatter.dart';
 import 'product_form_screen.dart';
+import 'category_dialog.dart';
 
 /// Product List Screen — Daftar produk + search + filter + hapus.
 class ProductListScreen extends StatefulWidget {
@@ -203,12 +204,36 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   color: Colors.white,
                 ),
               ),
-              Text(
-                '${_allProducts.length} item',
-                style: GoogleFonts.poppins(
-                  fontSize: 13,
-                  color: Colors.white.withValues(alpha: 0.7),
-                ),
+              Row(
+                children: [
+                  Text(
+                    '${_allProducts.length} item',
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.white.withValues(alpha: 0.7),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () async {
+                      final changed = await CategoryDialog.show(context);
+                      if (changed == true) await _loadData();
+                    },
+                    child: Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.category_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
