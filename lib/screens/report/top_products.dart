@@ -75,7 +75,7 @@ class _TopProductsState extends State<TopProducts> {
   // ============================================================
 
   Widget _buildPodium() {
-    if (_topProducts.length < 1) return const SizedBox.shrink();
+    if (_topProducts.isEmpty) return const SizedBox.shrink();
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20),

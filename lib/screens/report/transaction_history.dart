@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/transaction.dart' as model;
 import '../../services/report_service.dart';
-import '../../services/transaction_service.dart';
+
 import '../../utils/constants.dart';
 import '../../utils/currency_formatter.dart';
 import '../../utils/date_formatter.dart';
@@ -20,7 +20,6 @@ class TransactionHistory extends StatefulWidget {
 
 class _TransactionHistoryState extends State<TransactionHistory> {
   final ReportService _reportService = ReportService();
-  final TransactionService _transactionService = TransactionService();
 
   List<model.Transaction> _transactions = [];
   bool _isLoading = true;

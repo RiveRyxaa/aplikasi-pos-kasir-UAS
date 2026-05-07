@@ -384,7 +384,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
   Widget _buildCategoryDropdown() {
     return DropdownButtonFormField<int>(
-      value: _selectedCategoryId,
+      initialValue: _selectedCategoryId,
       decoration: InputDecoration(
         labelText: 'Kategori',
         prefixIcon:
