@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -19,8 +20,14 @@ class DatabaseService {
 
   /// Inisialisasi database
   Future<Database> _initDatabase() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'kasir.db');
+    String path;
+    if (kIsWeb) {
+      // Di web, tidak ada filesystem path — gunakan nama langsung
+      path = 'kasir.db';
+    } else {
+      final dbPath = await getDatabasesPath();
+      path = join(dbPath, 'kasir.db');
+    }
 
     return await openDatabase(
       path,

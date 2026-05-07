@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,15 @@ import '../../models/product.dart';
 import '../../models/category.dart' as cat;
 import '../../services/product_service.dart';
 import '../../utils/constants.dart';
+
+/// Kategori fallback untuk platform web (SQLite tidak tersedia)
+final List<cat.Category> _webFallbackCategories = [
+  cat.Category(id: 1, name: 'Makanan'),
+  cat.Category(id: 2, name: 'Minuman'),
+  cat.Category(id: 3, name: 'Snack'),
+  cat.Category(id: 4, name: 'Rokok'),
+  cat.Category(id: 5, name: 'Lainnya'),
+];
 
 /// Product Form Screen — Tambah / Edit produk.
 class ProductFormScreen extends StatefulWidget {
@@ -66,11 +76,17 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   }
 
   Future<void> _loadCategories() async {
-    if (kIsWeb) return;
-    final categories = await _productService.getAllCategories();
+    try {
+      if (kIsWeb) {
+        _categories = _webFallbackCategories;
+      } else {
+        _categories = await _productService.getAllCategories();
+      }
+    } catch (_) {
+      _categories = _webFallbackCategories;
+    }
     if (!mounted) return;
     setState(() {
-      _categories = categories;
       // Default ke kategori pertama jika tambah baru
       if (!_isEdit && _categories.isNotEmpty && _selectedCategoryId == null) {
         _selectedCategoryId = _categories.first.id;

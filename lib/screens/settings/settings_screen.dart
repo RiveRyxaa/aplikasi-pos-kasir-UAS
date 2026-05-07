@@ -56,12 +56,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _receiptFooter = footer;
           _showCostPrice = showCost;
           _footerController.text = _receiptFooter;
-          _isLoading = false;
         });
-      } else {
-        setState(() => _isLoading = false);
       }
     } catch (_) {
+      // Error
+    } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }
@@ -532,7 +531,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Switch(
                     value: _showCostPrice,
                     onChanged: _toggleCostPrice,
-                    activeColor: AppColors.primary,
+                    activeThumbColor: AppColors.primary,
                   ),
                 ],
               ),

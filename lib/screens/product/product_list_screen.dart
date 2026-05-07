@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,12 +52,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
           _allProducts = products;
           _filteredProducts = products;
           _categories = categories;
-          _isLoading = false;
         });
-      } else {
-        setState(() => _isLoading = false);
       }
     } catch (_) {
+      // Database error
+    } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }

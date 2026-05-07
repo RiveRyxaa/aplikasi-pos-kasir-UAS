@@ -13,21 +13,36 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Inisialisasi Hive (user & sesi)
-  await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
-  await Hive.openBox<User>(AppStrings.userBox);
-  await Hive.openBox(AppStrings.sessionBox);
+  try {
+    await Hive.initFlutter();
+    Hive.registerAdapter(UserAdapter());
+    await Hive.openBox<User>(AppStrings.userBox);
+    await Hive.openBox(AppStrings.sessionBox);
+    debugPrint('✅ Hive initialized');
+  } catch (e) {
+    debugPrint('❌ Hive init error: $e');
+  }
 
   // Inisialisasi SQLite database (produk, transaksi)
-  // sqflite tidak support web, jadi skip di platform web
+  // sqflite hanya support mobile/desktop, skip di web
   if (!kIsWeb) {
-    await DatabaseService().database;
-    // Seed produk dummy untuk testing (hanya sekali)
-    await ProductService().seedDummyProducts();
+    try {
+      await DatabaseService().database;
+      await ProductService().seedDummyProducts();
+      debugPrint('✅ SQLite initialized');
+    } catch (e) {
+      debugPrint('❌ SQLite init error: $e');
+    }
+  } else {
+    debugPrint('ℹ️ Web mode — SQLite skipped, using fallback data');
   }
 
   // Inisialisasi locale Indonesia (format tanggal & mata uang)
-  await DateFormatter.init();
+  try {
+    await DateFormatter.init();
+  } catch (e) {
+    debugPrint('❌ DateFormatter init error: $e');
+  }
 
   runApp(const KasirApp());
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         });
       }
     } catch (_) {
-      // Database tidak tersedia (web platform)
+      // Error loading data
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

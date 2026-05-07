@@ -268,13 +268,20 @@ class _LoginScreenState extends State<LoginScreen>
                                 color: AppColors.textSecondary,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
+                            TextButton(
+                              onPressed: () {
                                 Navigator.pushNamed(
                                   context,
                                   AppRoutes.register,
                                 );
                               },
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 4, vertical: 2),
+                                minimumSize: Size.zero,
+                                tapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                              ),
                               child: Text(
                                 AppStrings.register,
                                 style: GoogleFonts.poppins(

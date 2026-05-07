@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,12 +54,11 @@ class _TransactionHistoryState extends State<TransactionHistory> {
         if (!mounted) return;
         setState(() {
           _transactions = result;
-          _isLoading = false;
         });
-      } else {
-        setState(() => _isLoading = false);
       }
     } catch (_) {
+      // Error
+    } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }
